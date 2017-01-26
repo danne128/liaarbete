@@ -24,7 +24,6 @@ class SharedLocationsTableViewController: UITableViewController {
     
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -119,21 +118,25 @@ class SharedLocationsTableViewController: UITableViewController {
                     destination.modesOfTransport = "driving"
                     destination.otherLong = longitude
                     destination.otherLat = latitude
+                    destination.segmentedControl.selectedSegmentIndex = 0
                 }
                 else if segmentControl.selectedSegmentIndex == 1 {
                     destination.modesOfTransport = "walking"
                     destination.otherLong = longitude
                     destination.otherLat = latitude
+                    destination.segmentedControl.selectedSegmentIndex = 1
                 }
                 else if segmentControl.selectedSegmentIndex == 2 {
                     destination.modesOfTransport = "bicycling"
                     destination.otherLong = longitude
                     destination.otherLat = latitude
+                    destination.segmentedControl.selectedSegmentIndex = 2
                 }
                 else if segmentControl.selectedSegmentIndex == 3 {
                     destination.modesOfTransport = "transit"
                     destination.otherLong = longitude
                     destination.otherLat = latitude
+                    destination.segmentedControl.selectedSegmentIndex = 3
                 }
             }
             else {

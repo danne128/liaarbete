@@ -48,8 +48,10 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
     
     var mapView = GMSMapView()
     
+    let segmentedControl = UISegmentedControl(items: ["Driving", "Walking", "Bicycling", "Transit"])
+    
     @IBOutlet weak var shareButton: UIBarButtonItem!
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,11 +64,21 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
         let height = image.size.height
         let width = image.size.width
         
+        let navBarHeight: CGFloat = self.navigationController!.navigationBar.frame.height
+
+        segmentedControl.frame = CGRect(x: 0, y: navBarHeight + 20, width: mapView.frame.size.width, height: 30)
+        segmentedControl.backgroundColor = UIColor.white
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.isHidden = true
+        segmentedControl.addTarget(self, action: #selector(GoogleMapsViewController.segmentedControlValueChanged), for: UIControlEvents.valueChanged)
+        
+        
         let button = UIButton()
         button.frame = (frame: CGRect(x: (mapView.frame.size.width / 2 - (width / 2)), y: mapView.frame.size.height - 120, width: width, height: height))
         button.setImage(#imageLiteral(resourceName: "facebook-button.png"), for: .normal)
         button.setTitle("My button", for: .normal)
         mapView.addSubview(button)
+        mapView.addSubview(segmentedControl)
     }
 
     override func didReceiveMemoryWarning() {
@@ -95,13 +107,13 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-        locationManager.requestWhenInUseAuthorization()
+        //locationManager.requestWhenInUseAuthorization()
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
         
         currentLocation = locationManager.location!
         
-        let camera = GMSCameraPosition.camera(withTarget: currentLocation.coordinate, zoom: 13.0)
+        let camera = GMSCameraPosition.camera(withTarget: currentLocation.coordinate, zoom: 18.0)
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         mapView.settings.myLocationButton = true
         mapView.settings.compassButton = true
@@ -125,6 +137,29 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
     func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(GoogleMapsViewController.getOtherUsersLocation), userInfo: nil, repeats: true)
     }
+    
+    
+    func segmentedControlValueChanged() {
+        
+        if segmentedControl.selectedSegmentIndex == 0 {
+            self.modesOfTransport = "driving"
+            getOtherUsersLocation()
+        }
+        else if segmentedControl.selectedSegmentIndex == 1 {
+            self.modesOfTransport = "walking"
+            getOtherUsersLocation()
+        }
+        else if segmentedControl.selectedSegmentIndex == 2 {
+            self.modesOfTransport = "bicycling"
+            getOtherUsersLocation()
+        }
+        else if segmentedControl.selectedSegmentIndex == 3 {
+            self.modesOfTransport = "transit"
+            getOtherUsersLocation()
+        }
+        
+    }
+    
     
     
     func getAddressFromLongLat(address: String) {
@@ -188,7 +223,8 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
                                 object?["latitude"] = lat
                                 object?.saveInBackground(block: { (success, error) in
                                     if error != nil {
-                                        print(error!.localizedDescription as Any)
+                                        print("hej")
+                                        print(error!.localizedDescription as Any!)
                                     }
                                     else {
                                         self.marker = GMSMarker(position: position)
@@ -224,6 +260,7 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
     
     func drawDirections() {
         if otherLong != 0 && otherLat != 0 && otherLong != otherLong2 && otherLat != otherLat2{
+            self.segmentedControl.isHidden = false
             self.mapView.clear()
             otherLong2 = otherLong
             otherLat2 = otherLat
@@ -276,6 +313,7 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
             task.resume()
         }
         else if otherLong != 0 && otherLat != 0 && otherLong == otherLong2 && otherLat == otherLat2{
+            self.segmentedControl.isHidden = false
             let position = CLLocationCoordinate2DMake(CLLocationDegrees(self.otherLat), CLLocationDegrees(self.otherLong))
             self.marker = GMSMarker(position: position)
             self.marker.icon = GMSMarker.markerImage(with: UIColor.blue)

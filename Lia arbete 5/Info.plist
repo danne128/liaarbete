@@ -4,8 +4,6 @@
 <dict>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Will you allow this app to always see your location, even when it is not active?</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Will you allow this app to see your location when it is active?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Use as profilepicture</string>
 	<key>CFBundleURLTypes</key>

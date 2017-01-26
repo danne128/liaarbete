@@ -17,7 +17,7 @@
         <scene sceneID="dMH-5j-Bf1">
             <objects>
                 <navigationController toolbarHidden="NO" id="bRq-wC-KhU" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="aSu-2v-vbV">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aSu-2v-vbV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -58,7 +58,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MITT LIA PROJEKT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1n3-MK-tfM">
-                                <rect key="frame" x="101.5" y="145" width="172" height="24"/>
+                                <rect key="frame" x="102" y="145" width="172" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -575,13 +575,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnp-S6-QLR">
-                                <rect key="frame" x="145.5" y="120" width="84" height="24"/>
+                                <rect key="frame" x="146" y="120" width="84" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fF3-Je-doQ">
-                                <rect key="frame" x="63.5" y="190" width="247" height="24"/>
+                                <rect key="frame" x="64" y="190" width="247" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="NQ1-n7-B9l"/>
                                     <constraint firstAttribute="width" constant="247" id="fHd-aq-2ZE"/>
@@ -591,7 +591,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T16-7L-nJA">
-                                <rect key="frame" x="15.5" y="309" width="89" height="30"/>
+                                <rect key="frame" x="16" y="309" width="89" height="30"/>
                                 <state key="normal" title="Invite friends"/>
                                 <connections>
                                     <action selector="inviteFriendsWithFacebook:" destination="Wxd-eL-PDP" eventType="touchUpInside" id="HbW-FQ-oYS"/>
