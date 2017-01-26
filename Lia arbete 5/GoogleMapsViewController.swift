@@ -126,7 +126,6 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
         getOtherUsersLocation()
         runTimer()
         
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -287,9 +286,16 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
                         
                         let responseString = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                         let routes = responseString["routes"] as! NSArray
+                        let routesDict = routes[0] as! NSDictionary
+                        let legs = routesDict["legs"] as! NSArray
+                        let legsDict = legs[0] as! NSDictionary
+                        let distance = legsDict["distance"] as! NSDictionary
+                        let duration = legsDict["duration"] as! NSDictionary
+                        let distanceText = distance["text"]! as! String
+                        let durationText = duration["text"]! as! String
+                        print("Du ska ta dig \(distanceText) och det kommer ta ca \(durationText)")
                         
                         for route in routes as! [[AnyHashable:Any]] {
-                        
                             let routeOverviewPolyline = route["overview_polyline"] as! NSDictionary
                             let points = routeOverviewPolyline["points"] as? String
                             
@@ -337,6 +343,14 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
                         
                         let responseString = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                         let routes = responseString["routes"] as! NSArray
+                        let routesDict = routes[0] as! NSDictionary
+                        let legs = routesDict["legs"] as! NSArray
+                        let legsDict = legs[0] as! NSDictionary
+                        let distance = legsDict["distance"] as! NSDictionary
+                        let duration = legsDict["duration"] as! NSDictionary
+                        let distanceText = distance["text"]! as! String
+                        let durationText = duration["text"]! as! String
+                        print("Du ska ta dig \(distanceText) och det kommer ta ca \(durationText)")
                         
                         for route in routes as! [[AnyHashable:Any]] {
                             
