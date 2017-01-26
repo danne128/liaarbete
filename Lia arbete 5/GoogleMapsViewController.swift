@@ -120,6 +120,8 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
         mapView.settings.zoomGestures = true
         mapView.isMyLocationEnabled = true
         mapView.settings.rotateGestures = false
+        mapView.settings.indoorPicker = false
+        mapView.settings.compassButton = true
         self.view = mapView
         
         checkIfUserHasASavedLocation()
@@ -535,7 +537,6 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
         
         self.newLocation = locations.last! as CLLocation
         _ = CLLocationCoordinate2D(latitude: self.newLocation.coordinate.latitude, longitude: self.newLocation.coordinate.longitude)

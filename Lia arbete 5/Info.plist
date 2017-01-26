@@ -2,8 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Will you allow this app to always see your location, even when it is not active?</string>
+	<string>We will be able to send you notifications when you&apos;re in a certain area</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Use as profilepicture</string>
 	<key>CFBundleURLTypes</key>
