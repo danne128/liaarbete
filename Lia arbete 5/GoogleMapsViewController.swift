@@ -77,7 +77,6 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
         segmentedControl.isHidden = true
         segmentedControl.addTarget(self, action: #selector(GoogleMapsViewController.segmentedControlValueChanged), for: UIControlEvents.valueChanged)
         
-        
         let button = UIButton()
         button.frame = (frame: CGRect(x: (mapView.frame.size.width / 2 - (width / 2)), y: mapView.frame.size.height - 120, width: width, height: height))
         button.setImage(#imageLiteral(resourceName: "facebook-button.png"), for: .normal)
@@ -302,24 +301,39 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
                         
                         let responseString = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                         let routes = responseString["routes"] as! NSArray
-                        /*let routesDict = routes[0] as! NSDictionary
-                        let legs = routesDict["legs"] as! NSArray
-                        let legsDict = legs[0] as! NSDictionary
-                        let distance = legsDict["distance"] as! NSDictionary
-                        let duration = legsDict["duration"] as! NSDictionary
-                        let distanceText = distance["text"]! as! String
-                        let durationText = duration["text"]! as! String
-                        print("Du ska ta dig \(distanceText) och det kommer ta ca \(durationText)")*/
                         
                         for route in routes as! [[AnyHashable:Any]] {
-                            let routeOverviewPolyline = route["overview_polyline"] as! NSDictionary
-                            let points = routeOverviewPolyline["points"] as? String
-                            
-                            DispatchQueue.main.sync {
-                                let path = GMSPath.init(fromEncodedPath: points!)
-                                let polyline = GMSPolyline.init(path: path)
-                                polyline.strokeWidth = 3.0
-                                polyline.map = self.mapView
+                            let routesDict = route as NSDictionary
+                            let legs = routesDict["legs"] as! NSArray
+                            let legsDict = legs[0] as! NSDictionary
+                            let steps = legsDict["steps"] as! NSArray
+                            for i in steps as NSArray {
+                                let step = i as! NSDictionary
+                                
+                                let travelmode = step["travel_mode"] as! String
+                                let polyline = step["polyline"] as! NSDictionary
+                                let points = polyline["points"] as! String
+                                DispatchQueue.main.sync {
+                                    
+                                    let path = GMSPath.init(fromEncodedPath: points)
+                                    let polyline = GMSPolyline.init(path: path)
+                                    
+                                    if travelmode == "WALKING" {
+                                        polyline.strokeColor = UIColor(red: 223/255, green: 65/255, blue: 65/255, alpha: 1.0)
+                                    }
+                                    else if travelmode == "TRANSIT" {
+                                        polyline.strokeColor = UIColor(red: 207/255, green: 65/255, blue: 223/255, alpha: 1.0)
+                                    }
+                                    else if travelmode == "BICYCLING" {
+                                        polyline.strokeColor = UIColor(red: 60/255, green: 236/255, blue: 119/255, alpha: 1.0)
+                                    }
+                                    else {
+                                        polyline.strokeColor = UIColor(red: 65/255, green: 133/255, blue: 222/255, alpha: 1.0)
+                                    }
+                                    
+                                    polyline.strokeWidth = 5.0
+                                    polyline.map = self.mapView
+                                }
                             }
                          }
                     }
@@ -359,25 +373,40 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
                         
                         let responseString = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                         let routes = responseString["routes"] as! NSArray
-                        /*let routesDict = routes[0] as! NSDictionary
-                        let legs = routesDict["legs"] as! NSArray
-                        let legsDict = legs[0] as! NSDictionary
-                        let distance = legsDict["distance"] as! NSDictionary
-                        let duration = legsDict["duration"] as! NSDictionary
-                        let distanceText = distance["text"]! as! String
-                        let durationText = duration["text"]! as! String
-                        print("Du ska ta dig \(distanceText) och det kommer ta ca \(durationText)")*/
                         
                         for route in routes as! [[AnyHashable:Any]] {
-                            
-                            let routeOverviewPolyline = route["overview_polyline"] as! NSDictionary
-                            let points = routeOverviewPolyline["points"] as? String
-                            
-                            DispatchQueue.main.sync {
-                                let path = GMSPath.init(fromEncodedPath: points!)
-                                let polyline = GMSPolyline.init(path: path)
-                                polyline.strokeWidth = 3.0
-                                polyline.map = self.mapView
+                            let routesDict = route as NSDictionary
+                            let legs = routesDict["legs"] as! NSArray
+                            let legsDict = legs[0] as! NSDictionary
+                            let steps = legsDict["steps"] as! NSArray
+                            for i in steps as NSArray {
+                                let step = i as! NSDictionary
+                                //let travelmode = step["travel_mode"] as! String
+                                
+                                let travelmode = step["travel_mode"] as! String
+                                let polyline = step["polyline"] as! NSDictionary
+                                let points = polyline["points"] as! String
+                                DispatchQueue.main.sync {
+                                    
+                                    let path = GMSPath.init(fromEncodedPath: points)
+                                    let polyline = GMSPolyline.init(path: path)
+                                    
+                                    if travelmode == "WALKING" {
+                                        polyline.strokeColor = UIColor(red: 223/255, green: 65/255, blue: 65/255, alpha: 1.0)
+                                    }
+                                    else if travelmode == "TRANSIT" {
+                                        polyline.strokeColor = UIColor(red: 207/255, green: 65/255, blue: 223/255, alpha: 1.0)
+                                    }
+                                    else if travelmode == "BICYCLING" {
+                                        polyline.strokeColor = UIColor(red: 60/255, green: 236/255, blue: 119/255, alpha: 1.0)
+                                    }
+                                    else {
+                                        polyline.strokeColor = UIColor(red: 65/255, green: 133/255, blue: 222/255, alpha: 1.0)
+                                    }
+                                    
+                                    polyline.strokeWidth = 5.0
+                                    polyline.map = self.mapView
+                                }
                             }
                         }
                     }
