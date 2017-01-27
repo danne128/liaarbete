@@ -48,6 +48,11 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
     
     var mapView = GMSMapView()
     
+    
+    var myLong: NSNumber = 0.0
+    var myLat: NSNumber = 0.0
+    
+    
     let segmentedControl = UISegmentedControl(items: ["Driving", "Walking", "Bicycling", "Transit"])
     
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -77,7 +82,7 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
         button.frame = (frame: CGRect(x: (mapView.frame.size.width / 2 - (width / 2)), y: mapView.frame.size.height - 120, width: width, height: height))
         button.setImage(#imageLiteral(resourceName: "facebook-button.png"), for: .normal)
         button.setTitle("My button", for: .normal)
-        mapView.addSubview(button)
+        //mapView.addSubview(button)
         mapView.addSubview(segmentedControl)
     }
 
@@ -91,6 +96,11 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
         checkIfUserHasASavedLocation()
         getOtherUsersLocation()
         runTimer()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        locationManager.requestAlwaysAuthorization()
     }
     
     
@@ -108,10 +118,14 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         //locationManager.requestWhenInUseAuthorization()
-        locationManager.requestAlwaysAuthorization()
+        //locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
         
         currentLocation = locationManager.location!
+        
+        myLat = currentLocation.coordinate.latitude as NSNumber
+        myLong = currentLocation.coordinate.longitude as NSNumber
+        
         
         let camera = GMSCameraPosition.camera(withTarget: currentLocation.coordinate, zoom: 18.0)
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
@@ -260,7 +274,7 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
     
     
     func drawDirections() {
-        if otherLong != 0 && otherLat != 0 && otherLong != otherLong2 && otherLat != otherLat2{
+        if otherLong != 0 && otherLat != 0 && otherLong != otherLong2 && otherLat != otherLat2 {
             self.segmentedControl.isHidden = false
             self.mapView.clear()
             otherLong2 = otherLong
@@ -271,7 +285,7 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
             self.marker.map = self.mapView
             
             directionsActive = true
-            let stringUrl = "\(baseURL)directions/json?origin=\(currentLocation.coordinate.latitude),\(currentLocation.coordinate.longitude)&destination=\(otherLat),\(otherLong)&mode=\(modesOfTransport)&key=\(Config.googleDirectionsGeolocationAPI)"
+            let stringUrl = "\(baseURL)directions/json?origin=\(myLat),\(myLong)&destination=\(otherLat),\(otherLong)&mode=\(modesOfTransport)&key=\(Config.googleDirectionsGeolocationAPI)"
             let url = NSURL(string: stringUrl)
             let request = NSMutableURLRequest(url: url! as URL)
             let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
@@ -288,14 +302,14 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
                         
                         let responseString = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                         let routes = responseString["routes"] as! NSArray
-                        let routesDict = routes[0] as! NSDictionary
+                        /*let routesDict = routes[0] as! NSDictionary
                         let legs = routesDict["legs"] as! NSArray
                         let legsDict = legs[0] as! NSDictionary
                         let distance = legsDict["distance"] as! NSDictionary
                         let duration = legsDict["duration"] as! NSDictionary
                         let distanceText = distance["text"]! as! String
                         let durationText = duration["text"]! as! String
-                        print("Du ska ta dig \(distanceText) och det kommer ta ca \(durationText)")
+                        print("Du ska ta dig \(distanceText) och det kommer ta ca \(durationText)")*/
                         
                         for route in routes as! [[AnyHashable:Any]] {
                             let routeOverviewPolyline = route["overview_polyline"] as! NSDictionary
@@ -320,7 +334,7 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
             }
             task.resume()
         }
-        else if otherLong != 0 && otherLat != 0 && otherLong == otherLong2 && otherLat == otherLat2{
+        else if otherLong != 0 && otherLat != 0 && otherLong == otherLong2 && otherLat == otherLat2 {
             self.segmentedControl.isHidden = false
             let position = CLLocationCoordinate2DMake(CLLocationDegrees(self.otherLat), CLLocationDegrees(self.otherLong))
             self.marker = GMSMarker(position: position)
@@ -328,7 +342,7 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
             self.marker.map = self.mapView
             
             directionsActive = true
-            let stringUrl = "\(baseURL)directions/json?origin=\(currentLocation.coordinate.latitude),\(currentLocation.coordinate.longitude)&destination=\(otherLat),\(otherLong)&mode=\(modesOfTransport)&key=\(Config.googleDirectionsGeolocationAPI)"
+            let stringUrl = "\(baseURL)directions/json?origin=\(myLat),\(myLong)&destination=\(otherLat),\(otherLong)&mode=\(modesOfTransport)&key=\(Config.googleDirectionsGeolocationAPI)"
             let url = NSURL(string: stringUrl)
             let request = NSMutableURLRequest(url: url! as URL)
             let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
@@ -345,14 +359,14 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
                         
                         let responseString = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                         let routes = responseString["routes"] as! NSArray
-                        let routesDict = routes[0] as! NSDictionary
+                        /*let routesDict = routes[0] as! NSDictionary
                         let legs = routesDict["legs"] as! NSArray
                         let legsDict = legs[0] as! NSDictionary
                         let distance = legsDict["distance"] as! NSDictionary
                         let duration = legsDict["duration"] as! NSDictionary
                         let distanceText = distance["text"]! as! String
                         let durationText = duration["text"]! as! String
-                        print("Du ska ta dig \(distanceText) och det kommer ta ca \(durationText)")
+                        print("Du ska ta dig \(distanceText) och det kommer ta ca \(durationText)")*/
                         
                         for route in routes as! [[AnyHashable:Any]] {
                             
@@ -379,6 +393,7 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
             task.resume()
         }
     }
+    
     
     @IBAction func shareLocationWasClicked(_ sender: AnyObject) {
         
@@ -409,7 +424,6 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
         
         // show the alert
         self.present(alert, animated: true, completion: nil)
-        
     }
     
     
@@ -473,10 +487,8 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
                         print("your location has been saved")
                     }
                 }
-                
             }
         }
-        
     }
     
     
@@ -521,8 +533,6 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
                         let position = CLLocationCoordinate2DMake(CLLocationDegrees(self.returnedLatitude[self.i]), CLLocationDegrees(self.returnedLongitude[self.i]))
                         self.marker = GMSMarker(position: position)
                         self.marker.map = self.mapView
-                        
-                        
                     }
                 }
             }
@@ -540,6 +550,9 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
         
         self.newLocation = locations.last! as CLLocation
         _ = CLLocationCoordinate2D(latitude: self.newLocation.coordinate.latitude, longitude: self.newLocation.coordinate.longitude)
+        
+        myLong = newLocation.coordinate.longitude as NSNumber
+        myLat = newLocation.coordinate.latitude as NSNumber
         
         if let userEmail = PFUser.current()?["email"] as? String {
             self.email = userEmail
