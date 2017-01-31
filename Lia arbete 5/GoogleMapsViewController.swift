@@ -331,7 +331,7 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
                                         polyline.strokeColor = UIColor(red: 65/255, green: 133/255, blue: 222/255, alpha: 1.0)
                                     }
                                     
-                                    polyline.strokeWidth = 5.0
+                                    polyline.strokeWidth = 3.0
                                     polyline.map = self.mapView
                                 }
                             }
@@ -404,7 +404,7 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
                                         polyline.strokeColor = UIColor(red: 65/255, green: 133/255, blue: 222/255, alpha: 1.0)
                                     }
                                     
-                                    polyline.strokeWidth = 5.0
+                                    polyline.strokeWidth = 3.0
                                     polyline.map = self.mapView
                                 }
                             }
