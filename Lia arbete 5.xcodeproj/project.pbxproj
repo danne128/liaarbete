@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6500A0CA1DBF8739000DED3A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6500A0C91DBF8739000DED3A /* Default-568h@2x.png */; };
+		653437331E40E19600EFA39C /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 653437321E40E19600EFA39C /* ParseFacebookUtilsV4.framework */; };
 		65370C771DAAE7B20078FCA8 /* NSMutableArray+test.m in Sources */ = {isa = PBXBuildFile; fileRef = 65370C761DAAE7B20078FCA8 /* NSMutableArray+test.m */; };
 		654714751E2F798F0088A6C8 /* SharedLocationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654714741E2F798F0088A6C8 /* SharedLocationsTableViewController.swift */; };
 		655116E01DB8FF2800EA8F8C /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 655116DD1DB8FF2800EA8F8C /* Bolts.framework */; };
@@ -58,6 +59,7 @@
 /* Begin PBXFileReference section */
 		5909E440BBE25B87443A7EEC /* Pods-Lia arbete 5.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lia arbete 5.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lia arbete 5/Pods-Lia arbete 5.debug.xcconfig"; sourceTree = "<group>"; };
 		6500A0C91DBF8739000DED3A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		653437321E40E19600EFA39C /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtilsV4.framework; path = "parse-library-1.12.0/ParseFacebookUtilsV4.framework"; sourceTree = "<group>"; };
 		65370C741DAAE7B10078FCA8 /* Lia arbete 5-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lia arbete 5-Bridging-Header.h"; sourceTree = "<group>"; };
 		65370C751DAAE7B20078FCA8 /* NSMutableArray+test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+test.h"; sourceTree = "<group>"; };
 		65370C761DAAE7B20078FCA8 /* NSMutableArray+test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+test.m"; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			files = (
 				655117011DB9004A00EA8F8C /* UIKit.framework in Frameworks */,
 				6559CE4C1DB786D000977B38 /* SystemConfiguration.framework in Frameworks */,
+				653437331E40E19600EFA39C /* ParseFacebookUtilsV4.framework in Frameworks */,
 				6559CE4A1DB786C700977B38 /* QuartzCore.framework in Frameworks */,
 				655116FF1DB9003500EA8F8C /* OpenGLES.framework in Frameworks */,
 				6559CE4E1DB786D800977B38 /* libz.tbd in Frameworks */,
@@ -163,6 +166,7 @@
 		6559CE341DB7854B00977B38 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				653437321E40E19600EFA39C /* ParseFacebookUtilsV4.framework */,
 				655117001DB9004A00EA8F8C /* UIKit.framework */,
 				655116FE1DB9003500EA8F8C /* OpenGLES.framework */,
 				655116FC1DB9002600EA8F8C /* libc++.tbd */,
