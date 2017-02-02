@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bRq-wC-KhU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bRq-wC-KhU">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -612,6 +612,22 @@
                                     <segue destination="jUo-Yb-Ugm" kind="show" identifier="welcomeGoogleMaps" id="iWe-fY-4Ga"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mbH-Mr-0CX">
+                                <rect key="frame" x="16" y="501" width="159" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Connect with facebook"/>
+                                <connections>
+                                    <action selector="connectWithFacebook:" destination="Wxd-eL-PDP" eventType="touchUpInside" id="PJf-om-Cui"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCd-hv-xnO">
+                                <rect key="frame" x="209" y="501" width="150" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Create a custom login"/>
+                                <connections>
+                                    <action selector="createACustomLogin:" destination="Wxd-eL-PDP" eventType="touchUpInside" id="Ilc-cY-Ygg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -724,7 +740,7 @@
         <image name="facebook-button.png" width="294" height="42"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2im-2i-a5Z"/>
         <segue reference="X01-Fc-sHL"/>
+        <segue reference="Xcz-ZE-Ob3"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -22,11 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        PFFacebookUtils.initializeFacebook(applicationLaunchOptions: launchOptions)
-        
-        GMSServices.provideAPIKey(Config.googleAPI)
-        
         let configuration = ParseClientConfiguration {
             $0.applicationId = Config.parseAppID
             $0.clientKey = Config.parseClientKey
@@ -34,11 +29,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         Parse.initialize(with: configuration)
         
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        PFFacebookUtils.initializeFacebook(applicationLaunchOptions: launchOptions)
+        GMSServices.provideAPIKey(Config.googleAPI)
+        
         return true
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+        
+      return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
 
