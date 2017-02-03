@@ -33,6 +33,7 @@ class SignInViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFi
         let button = UIButton()
         button.frame = CGRect(x: 0, y: 0, width: 180, height: 40)
         button.setTitle("Log in with facebook", for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         button.sizeToFit()
         button.center = self.view.center
         button.backgroundColor = UIColor(red: 59/255, green: 89/255, blue: 152/255, alpha: 1.0)
@@ -115,6 +116,7 @@ class SignInViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFi
                             self.fullName = firstName + " " + lastName
                             user.email = email
                             user["fullname"] = self.fullName
+                            user["FBandParse"] = false
                             user.saveInBackground(block: { (success, error) in
                                 if success == true {
                                     self.moveOn = true

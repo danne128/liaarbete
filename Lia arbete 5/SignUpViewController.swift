@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import ParseFacebookUtilsV4
 
 class SignUpViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate {
     
@@ -28,11 +29,11 @@ class SignUpViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFi
     var moveOnWithFacebook: Bool = false
     
     
-    let loginButton: FBSDKLoginButton = {
+    /*let loginButton: FBSDKLoginButton = {
         let button = FBSDKLoginButton()
         button.readPermissions = ["email", "user_friends"]
         return button
-    }()
+    }()*/
     
 
     override func viewDidLoad() {
@@ -46,10 +47,16 @@ class SignUpViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFi
         passwordTextField.delegate = self
         
         
-        view.addSubview(loginButton)
-        loginButton.center = view.center
-        loginButton.frame.origin.y -= 20
-        loginButton.delegate = self
+        let button = UIButton()
+        button.frame = CGRect(x: 0, y: 0, width: 180, height: 40)
+        button.setTitle("Sign up with facebook", for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        button.sizeToFit()
+        button.center = self.view.center
+        button.frame.origin.y -= 20
+        button.backgroundColor = UIColor(red: 59/255, green: 89/255, blue: 152/255, alpha: 1.0)
+        button.addTarget(self, action: #selector(SignUpViewController.fetchProfile), for: .touchUpInside)
+        view.addSubview(button)
         
         NotificationCenter.default.addObserver(self, selector: #selector(SignUpViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SignUpViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -113,26 +120,79 @@ class SignUpViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFi
         }
     }
     
+    
+    
+    func fetchProfile() {
+        PFFacebookUtils.logInInBackground(withReadPermissions: ["email", "public_profile", "user_friends"]) { (user, error) in
+            
+            if let user = user {
+                if user.isNew {
+                    print("new user")
+                    let parameters = ["fields": "first_name, last_name, email"]
+                    FBSDKGraphRequest(graphPath: "me", parameters: parameters).start { (connection, result, error) in
+                        
+                        if error != nil {
+                            print(error as Any)
+                            self.moveOn = false
+                            return
+                        }
+                        
+                        guard let resultNew = result as? [String:Any] else {
+                            return
+                        }
+                        
+                        if let firstName = resultNew["first_name"] as? String, let lastName = resultNew["last_name"] as? String, let email = resultNew["email"] as? String {
+                            self.fullName = firstName + " " + lastName
+                            user.email = email
+                            user["fullname"] = self.fullName
+                            user["FBandParse"] = false
+                            user.saveInBackground(block: { (success, error) in
+                                if success == true {
+                                    self.moveOnWithFacebook = true
+                                    self.seeIfMoveOnAvailable()
+                                }
+                                else {
+                                    print(error!.localizedDescription as Any)
+                                }
+                            })
+                        }
+                    }
+                }
+                else {
+                    print("old user")
+                    self.moveOnWithFacebook = true
+                    self.seeIfMoveOnAvailable()
+                }
+            }
+            else {
+                print("didn't work")
+                PFUser.logOut()
+            }
+            
+        }
+    }
+    
+    
 
     func seeIfMoveOnAvailable() {
         if moveOn == true {
             performSegue(withIdentifier: "moveToCompleteInformation", sender: self)
         }
         else if moveOnWithFacebook == true {
-            performSegue(withIdentifier: "signUpFacebookToCompleteInformation", sender: self)
+            performSegue(withIdentifier: "SignedUpWithFacebook", sender: self)
         }
     }
     
     
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         if FBSDKAccessToken.current() != nil {
-            performSegue(withIdentifier: "signUpFacebookToCompleteInformation", sender: self)
+            performSegue(withIdentifier: "SignedUpWithFacebook", sender: self)
         }
         
     }
     
     func loginButtonWillLogin(_ loginButton: FBSDKLoginButton!) -> Bool {
-        return true
+        return false
     }
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {

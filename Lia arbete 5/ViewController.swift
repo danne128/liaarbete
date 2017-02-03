@@ -24,13 +24,13 @@ class ViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.isToolbarHidden = true
         
-        signInButton.setTitleColor(UIColor.init(red: 192.0/255.0, green: 192/255.0, blue: 192.0/255.0, alpha: 1.0), for: UIControlState())
-        signUpButton.setTitleColor(UIColor.init(red: 192.0/255.0, green: 192/255.0, blue: 192.0/255.0, alpha: 1.0), for: UIControlState())
+        signInButton.setTitleColor(UIColor.init(red: 138.0/255.0, green: 141/255.0, blue: 143.0/255.0, alpha: 1.0), for: UIControlState())
+        signUpButton.setTitleColor(UIColor.init(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1.0), for: UIControlState())
         
         signInButton.backgroundColor = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1.0)
-        signUpButton.backgroundColor = UIColor(red: 255.0/255.0, green: 51.0/255.0, blue: 153.0/255.0, alpha: 1.0)
+        signUpButton.backgroundColor = UIColor(red: 217.0/255.0, green: 33.0/255.0, blue: 91.0/255.0, alpha: 1.0)
         
-        view.backgroundColor = UIColor(red: 51.0/255.0, green: 153.0/255.0, blue: 255.0/255.0, alpha: 1.0)
+        view.backgroundColor = UIColor(red: 73.0/255.0, green: 114.0/255.0, blue: 207.0/255.0, alpha: 1.0)
         
         titleLabel.textColor = UIColor.white
         

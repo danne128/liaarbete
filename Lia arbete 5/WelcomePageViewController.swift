@@ -25,9 +25,9 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate 
     @IBOutlet weak var inviteFriendsButton: UIButton!
     @IBOutlet weak var inviteFriendsOwnButton: UIButton!
     @IBOutlet weak var mapsButton: UIButton!
-    @IBOutlet weak var linkWithFacebookButton: UIButton!
+    @IBOutlet weak var connectWithFacebookButton: UIButton!
+    @IBOutlet weak var customLoginButton: UIButton!
 
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,9 +37,10 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate 
         self.navigationItem.hidesBackButton = true
         
         if FBSDKAccessToken.current() != nil {
-            fetchProfile()
             inviteFriendsButton.isEnabled = true
-            inviteFriendsOwnButton.isEnabled = true
+            inviteFriendsOwnButton.isEnabled = false
+            connectWithFacebookButton.isHidden = true
+            customLoginButton.isHidden = true
             print("fb log in")
         }
         
@@ -52,6 +53,20 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate 
                 self.email = userEmail
             }
             
+        }
+        
+        
+        if PFUser.current() != nil && FBSDKAccessToken.current() != nil {
+            if let user = PFUser.current()?["FBandParse"] as? Bool {
+                if user == true {
+                    connectWithFacebookButton.isHidden = true
+                    customLoginButton.isHidden = true
+                }
+            }
+        }
+        else if PFUser.current() != nil && FBSDKAccessToken.current() == nil {
+            connectWithFacebookButton.isHidden = false
+            customLoginButton.isHidden = true
         }
 
         // Do any additional setup after loading the view.
@@ -168,13 +183,52 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate 
                 print(error!.localizedDescription as Any)
             }
             else if success == true {
-                print("success")
+                let user = PFUser.current()
+                user?.password = "test"
+                user?["personnummer"] = 123456789012
+                user?["phone"] = 0987654321
+                user?["FBandParse"] = true
+                user?.saveInBackground(block: { (success, error) in
+                    if error != nil {
+                        print(error!.localizedDescription as Any)
+                    }
+                    else {
+                        print("success")
+                        self.connectWithFacebookButton.isHidden = true
+                        self.customLoginButton.isHidden = true
+                        self.inviteFriendsButton.isEnabled = true
+                    }
+                })
             }
         }
     }
     
     
     @IBAction func createACustomLogin(_ sender: Any) {
+        
+        PFFacebookUtils.linkUser(inBackground: PFUser.current()!, with: FBSDKAccessToken.current()) { (success, error) in
+            if error != nil {
+                print(error!.localizedDescription as Any)
+            }
+            else {
+                let user = PFUser.current()
+                user?.password = "test"
+                user?["personnummer"] = 123456789012
+                user?["phone"] = 0987654321
+                user?["FBandParse"] = true
+                user?.saveInBackground(block: { (success, error) in
+                    if error != nil {
+                        print(error!.localizedDescription as Any)
+                    }
+                    else {
+                        print("success")
+                        self.connectWithFacebookButton.isHidden = true
+                        self.customLoginButton.isHidden = true
+                        self.inviteFriendsButton.isEnabled = true
+                    }
+                })
+            }
+        }
         
     }
     

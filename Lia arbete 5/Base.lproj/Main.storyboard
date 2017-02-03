@@ -295,7 +295,7 @@
             </objects>
             <point key="canvasLocation" x="3449" y="1546"/>
         </scene>
-        <!--Title-->
+        <!--Sign up-->
         <scene sceneID="O0r-pL-701">
             <objects>
                 <viewController id="dJy-0T-FSA" customClass="SignUpViewController" customModule="Lia_arbete_5" customModuleProvider="target" sceneMemberID="viewController">
@@ -401,7 +401,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="oJU-wh-3uo">
+                    <navigationItem key="navigationItem" title="Sign up" id="oJU-wh-3uo">
                         <barButtonItem key="rightBarButtonItem" title="Continue" id="86A-re-zXQ">
                             <connections>
                                 <action selector="continueWasClicked:" destination="dJy-0T-FSA" id="est-Du-9wU"/>
@@ -414,7 +414,7 @@
                         <outlet property="phoneNumberTextField" destination="eN9-qU-lSH" id="E02-1Z-cdG"/>
                         <outlet property="somethingWrongLabel" destination="PuC-lL-ybh" id="XDS-YK-u3e"/>
                         <segue destination="sbd-Kw-OgP" kind="show" identifier="moveToCompleteInformation" id="X01-Fc-sHL"/>
-                        <segue destination="sbd-Kw-OgP" kind="show" identifier="signUpFacebookToCompleteInformation" id="oS4-lQ-3iT"/>
+                        <segue destination="Wxd-eL-PDP" kind="show" identifier="SignedUpWithFacebook" id="bAq-Ne-dhp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="912-ie-LGb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -424,7 +424,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1033" y="758"/>
+            <point key="canvasLocation" x="1018" y="758"/>
         </scene>
         <!--Complete your information-->
         <scene sceneID="4eF-jw-s0J">
@@ -560,7 +560,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h7R-3S-P9j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1756" y="758"/>
+            <point key="canvasLocation" x="1782" y="758"/>
         </scene>
         <!--Welcome Page View Controller-->
         <scene sceneID="lPH-XC-JfO">
@@ -649,6 +649,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="connectWithFacebookButton" destination="mbH-Mr-0CX" id="lw8-I7-l96"/>
+                        <outlet property="customLoginButton" destination="MCd-hv-xnO" id="dl5-aw-8cB"/>
                         <outlet property="fullNameLabel" destination="fF3-Je-doQ" id="eQN-6w-bxd"/>
                         <outlet property="inviteFriendsButton" destination="T16-7L-nJA" id="LgE-8o-f1Q"/>
                         <outlet property="inviteFriendsOwnButton" destination="3Z0-Zk-spi" id="2Z7-cQ-2pH"/>
@@ -740,7 +742,6 @@
         <image name="facebook-button.png" width="294" height="42"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="X01-Fc-sHL"/>
-        <segue reference="Xcz-ZE-Ob3"/>
+        <segue reference="bAq-Ne-dhp"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -255,6 +255,7 @@ class CompleteInformationViewController: UIViewController, UIImagePickerControll
             newUser.username = emailTextField.text
             newUser["phone"] = phoneNumberTextField.text
             newUser["fullname"] = fullNameTextField.text
+            newUser["FBandParse"] = false
             
             newUser.signUpInBackground(block: { (succeed, error) in
                 
