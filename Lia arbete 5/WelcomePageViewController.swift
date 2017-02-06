@@ -32,6 +32,7 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         fullNameLabel.text = name
         
         self.navigationItem.hidesBackButton = true
@@ -40,7 +41,7 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate 
             inviteFriendsButton.isEnabled = true
             inviteFriendsOwnButton.isEnabled = false
             connectWithFacebookButton.isHidden = true
-            customLoginButton.isHidden = true
+            customLoginButton.isHidden = false
             print("fb log in")
         }
         
@@ -206,17 +207,21 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate 
     
     @IBAction func createACustomLogin(_ sender: Any) {
         
+        
         PFFacebookUtils.linkUser(inBackground: PFUser.current()!, with: FBSDKAccessToken.current()) { (success, error) in
             if error != nil {
                 print(error!.localizedDescription as Any)
             }
             else {
                 let user = PFUser.current()
+                
                 user?.password = "test"
+                user?.username = "danne_tw@hotmail.com"
                 user?["personnummer"] = 123456789012
-                user?["phone"] = 0987654321
+                user?["phone"] = "0987654321"
                 user?["FBandParse"] = true
                 user?.saveInBackground(block: { (success, error) in
+                    print("hej")
                     if error != nil {
                         print(error!.localizedDescription as Any)
                     }

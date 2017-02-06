@@ -204,7 +204,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aqy-RV-LiT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1032.8" y="-41.829085457271368"/>
+            <point key="canvasLocation" x="1033" y="-42"/>
         </scene>
         <!--Google maps-->
         <scene sceneID="LJJ-3T-yS5">
@@ -424,7 +424,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1018" y="758"/>
+            <point key="canvasLocation" x="1033" y="758"/>
         </scene>
         <!--Complete your information-->
         <scene sceneID="4eF-jw-s0J">
@@ -659,7 +659,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dS0-Fu-reX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2495" y="758"/>
+            <point key="canvasLocation" x="2493.5999999999999" y="757.87106446776613"/>
         </scene>
         <!--Friends-->
         <scene sceneID="8em-Hw-lwi">
@@ -742,6 +742,6 @@
         <image name="facebook-button.png" width="294" height="42"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bAq-Ne-dhp"/>
+        <segue reference="f28-rL-bNo"/>
     </inferredMetricsTieBreakers>
 </document>
