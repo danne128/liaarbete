@@ -16,8 +16,11 @@
         <!--Navigation Controller-->
         <scene sceneID="dMH-5j-Bf1">
             <objects>
-                <navigationController toolbarHidden="NO" id="bRq-wC-KhU" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="aSu-2v-vbV">
+                <navigationController id="bRq-wC-KhU" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="667"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aSu-2v-vbV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -46,7 +49,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YjZ-lQ-aw9">
-                                <rect key="frame" x="43" y="399" width="120" height="70"/>
+                                <rect key="frame" x="43" y="443" width="120" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="DO8-Iy-2IU"/>
                                     <constraint firstAttribute="width" constant="120" id="He1-oZ-SnP"/>
@@ -64,7 +67,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqg-FX-MZ8">
-                                <rect key="frame" x="211" y="399" width="120" height="70"/>
+                                <rect key="frame" x="211" y="443" width="120" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="DjM-q3-HCO"/>
                                     <constraint firstAttribute="width" constant="120" id="VtU-K1-eBL"/>
@@ -574,74 +577,102 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnp-S6-QLR">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnp-S6-QLR">
                                 <rect key="frame" x="146" y="120" width="84" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fF3-Je-doQ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fF3-Je-doQ">
                                 <rect key="frame" x="64" y="190" width="247" height="24"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="NQ1-n7-B9l"/>
-                                    <constraint firstAttribute="width" constant="247" id="fHd-aq-2ZE"/>
-                                </constraints>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T16-7L-nJA">
-                                <rect key="frame" x="16" y="309" width="89" height="30"/>
-                                <state key="normal" title="Invite friends"/>
-                                <connections>
-                                    <action selector="inviteFriendsWithFacebook:" destination="Wxd-eL-PDP" eventType="touchUpInside" id="HbW-FQ-oYS"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Z0-Zk-spi">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Z0-Zk-spi">
                                 <rect key="frame" x="218" y="309" width="148" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Invite friends own API"/>
                                 <connections>
                                     <segue destination="vND-1v-Gbz" kind="show" id="5Gz-mi-4UI"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8uA-O4-KVK">
-                                <rect key="frame" x="168" y="396" width="38" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Maps"/>
-                                <connections>
-                                    <segue destination="jUo-Yb-Ugm" kind="show" identifier="welcomeGoogleMaps" id="iWe-fY-4Ga"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mbH-Mr-0CX">
-                                <rect key="frame" x="16" y="501" width="159" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Connect with facebook"/>
-                                <connections>
-                                    <action selector="connectWithFacebook:" destination="Wxd-eL-PDP" eventType="touchUpInside" id="PJf-om-Cui"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCd-hv-xnO">
-                                <rect key="frame" x="209" y="501" width="150" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Create a custom login"/>
-                                <connections>
-                                    <action selector="createACustomLogin:" destination="Wxd-eL-PDP" eventType="touchUpInside" id="Ilc-cY-Ygg"/>
-                                </connections>
-                            </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Qx-VO-Aoo">
+                                <rect key="frame" x="-200" y="64" width="200" height="603"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8uA-O4-KVK">
+                                        <rect key="frame" x="64" y="203" width="72" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="17"/>
+                                        <state key="normal" title="Maps">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="jUo-Yb-Ugm" kind="show" identifier="welcomeGoogleMaps" id="iWe-fY-4Ga"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mbH-Mr-0CX">
+                                        <rect key="frame" x="8" y="251" width="184" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
+                                        <state key="normal" title="Connect with facebook">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="connectWithFacebook:" destination="Wxd-eL-PDP" eventType="touchUpInside" id="PJf-om-Cui"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCd-hv-xnO">
+                                        <rect key="frame" x="12" y="300" width="176" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
+                                        <state key="normal" title="Create a custom login">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="createACustomLogin:" destination="Wxd-eL-PDP" eventType="touchUpInside" id="Ilc-cY-Ygg"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T16-7L-nJA">
+                                        <rect key="frame" x="38" y="367" width="124" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="17"/>
+                                        <state key="normal" title="Invite friends">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="inviteFriendsWithFacebook:" destination="Wxd-eL-PDP" eventType="touchUpInside" id="HbW-FQ-oYS"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G1k-BS-Ici">
+                                        <rect key="frame" x="84" y="111" width="33" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.564436449121832" green="0.75344927277789231" blue="0.89646883289124668" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Fyl-Ga-VCP"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="fF3-Je-doQ" firstAttribute="top" secondItem="vnp-S6-QLR" secondAttribute="bottom" constant="46" id="0jC-Wg-bSS"/>
-                            <constraint firstItem="vnp-S6-QLR" firstAttribute="top" secondItem="i4t-TB-btw" secondAttribute="bottom" constant="56" id="1Gq-6s-8vl"/>
-                            <constraint firstItem="T16-7L-nJA" firstAttribute="top" secondItem="fF3-Je-doQ" secondAttribute="bottom" constant="95" id="8ti-z5-ENT"/>
-                            <constraint firstItem="vnp-S6-QLR" firstAttribute="centerX" secondItem="dLo-a8-nl9" secondAttribute="centerX" id="A53-jJ-8pP"/>
-                            <constraint firstItem="T16-7L-nJA" firstAttribute="baseline" secondItem="3Z0-Zk-spi" secondAttribute="baseline" id="DiE-lO-RIb"/>
-                            <constraint firstItem="vnp-S6-QLR" firstAttribute="centerX" secondItem="fF3-Je-doQ" secondAttribute="centerX" id="Nfy-2e-wj6"/>
-                            <constraint firstItem="T16-7L-nJA" firstAttribute="centerX" secondItem="dLo-a8-nl9" secondAttribute="centerX" constant="-127.5" id="Y1h-ve-Y9U" userLabel="Invite Friends Button.centerX = centerX - 126"/>
-                            <constraint firstItem="3Z0-Zk-spi" firstAttribute="centerX" secondItem="dLo-a8-nl9" secondAttribute="centerX" constant="104.5" id="a2n-q6-FdX"/>
+                            <constraint firstItem="5Qx-VO-Aoo" firstAttribute="top" secondItem="i4t-TB-btw" secondAttribute="bottom" id="fiV-g0-Jr5"/>
+                            <constraint firstItem="o6k-Rn-hvF" firstAttribute="top" secondItem="5Qx-VO-Aoo" secondAttribute="bottom" id="jvx-3Z-oYz"/>
+                            <constraint firstItem="5Qx-VO-Aoo" firstAttribute="leading" secondItem="dLo-a8-nl9" secondAttribute="leading" constant="-200" id="qhD-dz-cNn"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="GAP-b5-oF1">
+                        <barButtonItem key="leftBarButtonItem" systemItem="organize" id="vpp-ka-XmG">
+                            <connections>
+                                <action selector="openMenu:" destination="Wxd-eL-PDP" id="qMS-kF-u4Q"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Log out" id="ZnK-ee-MvS">
                             <connections>
                                 <action selector="logoutButtonWasClicked:" destination="Wxd-eL-PDP" id="ah6-R1-MgP"/>
@@ -654,12 +685,14 @@
                         <outlet property="fullNameLabel" destination="fF3-Je-doQ" id="eQN-6w-bxd"/>
                         <outlet property="inviteFriendsButton" destination="T16-7L-nJA" id="LgE-8o-f1Q"/>
                         <outlet property="inviteFriendsOwnButton" destination="3Z0-Zk-spi" id="2Z7-cQ-2pH"/>
+                        <outlet property="leadingConstrait" destination="qhD-dz-cNn" id="AVD-FM-LDa"/>
                         <outlet property="mapsButton" destination="8uA-O4-KVK" id="cjg-ey-Piz"/>
+                        <outlet property="menuView" destination="5Qx-VO-Aoo" id="HfT-wv-wMB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dS0-Fu-reX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2493.5999999999999" y="757.87106446776613"/>
+            <point key="canvasLocation" x="2573.5999999999999" y="757.87106446776613"/>
         </scene>
         <!--Friends-->
         <scene sceneID="8em-Hw-lwi">

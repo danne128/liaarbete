@@ -17,6 +17,7 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate 
     var email: String = ""
     var objectID: String = ""
     
+    var menuShowing: Bool = false
     
     var friendsName: [NSString] = []
     var profilePictures: [UIImage] = []
@@ -27,11 +28,55 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate 
     @IBOutlet weak var mapsButton: UIButton!
     @IBOutlet weak var connectWithFacebookButton: UIButton!
     @IBOutlet weak var customLoginButton: UIButton!
+    @IBOutlet weak var menuView: UIView!
+    
+    
+    @IBOutlet weak var leadingConstrait: NSLayoutConstraint!
+    
+    
+    
+    @IBAction func openMenu(_ sender: Any) {
+        
+        if menuShowing {
+            leadingConstrait.constant = -200
+            
+            menuView.layer.shadowOpacity = 0.0
+            menuView.layer.shadowRadius = 6
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view?.backgroundColor = UIColor(white: 1, alpha: 1.0)
+                self.view.layoutIfNeeded()
+            })
+            
+        }
+        else {
+            leadingConstrait.constant = 0
+            
+            menuView.layer.shadowOpacity = 1.0
+            menuView.layer.shadowRadius = 6
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view?.backgroundColor = UIColor(white: 1, alpha: 0.3)
+                self.view.layoutIfNeeded()
+            })
+            
+        }
+        
+        menuShowing = !menuShowing
+        
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        menuView.isHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        menuView.isHidden = true
+    }
+    
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         fullNameLabel.text = name
         
