@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import ParseFacebookUtilsV4
 
-class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate {
+class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate, UIGestureRecognizerDelegate {
     
     var name: String = ""
     var moveOn: Bool = false
@@ -33,36 +33,6 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate 
     
     @IBOutlet weak var leadingConstrait: NSLayoutConstraint!
     
-    
-    
-    @IBAction func openMenu(_ sender: Any) {
-        
-        if menuShowing {
-            leadingConstrait.constant = -200
-            
-            menuView.layer.shadowOpacity = 0.0
-            menuView.layer.shadowRadius = 6
-            UIView.animate(withDuration: 0.3, animations: {
-                self.view?.backgroundColor = UIColor(white: 1, alpha: 1.0)
-                self.view.layoutIfNeeded()
-            })
-            
-        }
-        else {
-            leadingConstrait.constant = 0
-            
-            menuView.layer.shadowOpacity = 1.0
-            menuView.layer.shadowRadius = 6
-            UIView.animate(withDuration: 0.3, animations: {
-                self.view?.backgroundColor = UIColor(white: 1, alpha: 0.3)
-                self.view.layoutIfNeeded()
-            })
-            
-        }
-        
-        menuShowing = !menuShowing
-        
-    }
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -116,7 +86,12 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate 
         }
 
         // Do any additional setup after loading the view.
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissMenu))
+        tap.delegate = self
+        self.view.addGestureRecognizer(tap)
     }
+    
     
     func fetchUserProfile() {
         
@@ -126,6 +101,13 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate 
             
         }
     }
+    
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        let touchPoint: CGPoint = touch.location(in: self.view)
+        return !menuView.frame.contains((touchPoint))
+    }
+    
     
     
     func fetchProfile() {
@@ -150,9 +132,52 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate 
     }
     
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func dismissMenu() {
+        
+        if menuShowing == true {
+            
+            leadingConstrait.constant = -200
+            
+            menuView.layer.shadowOpacity = 0.0
+            menuView.layer.shadowRadius = 6
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view?.backgroundColor = UIColor(white: 1, alpha: 1.0)
+                self.view.layoutIfNeeded()
+            })
+            
+            menuShowing = false
+            
+        }
+        
+    }
+    
+    
+    @IBAction func openMenu(_ sender: Any) {
+        if menuShowing {
+            leadingConstrait.constant = -200
+            
+            menuView.layer.shadowOpacity = 0.0
+            menuView.layer.shadowRadius = 6
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view?.backgroundColor = UIColor(white: 1, alpha: 1.0)
+                self.view.layoutIfNeeded()
+            })
+            
+        }
+        else {
+            leadingConstrait.constant = 0
+            
+            menuView.layer.shadowOpacity = 1.0
+            menuView.layer.shadowRadius = 6
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view?.backgroundColor = UIColor(white: 1, alpha: 0.3)
+                self.view.layoutIfNeeded()
+            })
+            
+        }
+        
+        menuShowing = !menuShowing
+        
     }
     
 
