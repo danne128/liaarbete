@@ -21,6 +21,8 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
     
     var friendsName: [NSString] = []
     var profilePictures: [UIImage] = []
+    
+    let disconnectFromFacebookButton = UIButton()
 
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var inviteFriendsButton: UIButton!
@@ -28,6 +30,7 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
     @IBOutlet weak var mapsButton: UIButton!
     @IBOutlet weak var connectWithFacebookButton: UIButton!
     @IBOutlet weak var customLoginButton: UIButton!
+    
     @IBOutlet weak var menuView: UIView!
     
     
@@ -41,6 +44,7 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
     
     override func viewWillDisappear(_ animated: Bool) {
         menuView.isHidden = true
+        self.dismissMenu()
     }
     
 
@@ -48,39 +52,41 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        disconnectFromFacebookButton.frame = CGRect(x: connectWithFacebookButton.frame.origin.x, y: connectWithFacebookButton.frame.origin.y, width: connectWithFacebookButton.frame.width, height: connectWithFacebookButton.frame.height)
+        disconnectFromFacebookButton.setTitle("Disconnect from facebook", for: .normal)
+        disconnectFromFacebookButton.titleLabel!.font = connectWithFacebookButton.titleLabel!.font
+        disconnectFromFacebookButton.titleLabel!.textColor = connectWithFacebookButton.titleLabel!.textColor
+        disconnectFromFacebookButton.titleLabel!.numberOfLines = 1
+        disconnectFromFacebookButton.titleLabel!.adjustsFontSizeToFitWidth = true
+        disconnectFromFacebookButton.titleLabel!.lineBreakMode = NSLineBreakMode.byClipping
+        disconnectFromFacebookButton.addTarget(self, action: #selector(WelcomePageViewController.disconnectFromFacebook), for: .touchUpInside)
+        disconnectFromFacebookButton.isHidden = true
+        menuView.addSubview(disconnectFromFacebookButton)
+        
+        
+        
         fullNameLabel.text = name
         
         self.navigationItem.hidesBackButton = true
         
         if FBSDKAccessToken.current() != nil {
-            inviteFriendsButton.isEnabled = true
-            inviteFriendsOwnButton.isEnabled = false
-            connectWithFacebookButton.isHidden = true
-            customLoginButton.isHidden = false
-            print("fb log in")
-        }
-        
-        if PFUser.current() != nil {
-            fetchUserProfile()
-            mapsButton.isEnabled = true
-            inviteFriendsButton.isEnabled = true
-            print("parse log in")
-            if let userEmail = PFUser.current()?["email"] as? String {
-                self.email = userEmail
-            }
-            
-        }
-        
-        
-        if PFUser.current() != nil && FBSDKAccessToken.current() != nil {
             if let user = PFUser.current()?["FBandParse"] as? Bool {
                 if user == true {
                     connectWithFacebookButton.isHidden = true
                     customLoginButton.isHidden = true
+                    disconnectFromFacebookButton.isHidden = false
+                }
+                else {
+                    inviteFriendsButton.isEnabled = true
+                    inviteFriendsOwnButton.isEnabled = false
+                    connectWithFacebookButton.isHidden = true
+                    customLoginButton.isHidden = false
                 }
             }
+            
         }
-        else if PFUser.current() != nil && FBSDKAccessToken.current() == nil {
+        else if FBSDKAccessToken.current() == nil {
             connectWithFacebookButton.isHidden = false
             customLoginButton.isHidden = true
         }
@@ -90,6 +96,12 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissMenu))
         tap.delegate = self
         self.view.addGestureRecognizer(tap)
+        
+        fetchUserProfile()
+        
+        
+        
+        
     }
     
     
@@ -109,29 +121,6 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
     }
     
     
-    
-    func fetchProfile() {
-        
-        let parameters = ["fields": "first_name, last_name, name"]
-        FBSDKGraphRequest(graphPath: "me", parameters: parameters).start { (connection, result, error) in
-            
-            if error != nil {
-                print(error as Any)
-                return
-            }
-            
-            guard let resultNew = result as? [String:Any] else {
-                return
-            }
-            
-            if let firstName = resultNew["first_name"] as? String, let lastName = resultNew["last_name"] as? String {
-                self.fullNameLabel.text = firstName + " " + lastName
-                
-            }
-        }
-    }
-    
-    
     func dismissMenu() {
         
         if menuShowing == true {
@@ -148,11 +137,37 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
             menuShowing = false
             
         }
-        
     }
     
     
+    
+    func disconnectFromFacebook() {
+        PFFacebookUtils.unlinkUser(inBackground: PFUser.current()!) { (success, error) in
+            if error != nil {
+                print(error!.localizedDescription as Any)
+            }
+            else if success == true {
+                let user = PFUser.current()
+                user?["FBandParse"] = false
+                user?.saveInBackground(block: { (success, error) in
+                    if error != nil {
+                        print(error!.localizedDescription as Any)
+                    }
+                    else {
+                        self.disconnectFromFacebookButton.isHidden = true
+                        self.connectWithFacebookButton.isHidden = false
+                        print("success")
+                    }
+                })
+            }
+        }
+    }
+    
+    
+    
+    
     @IBAction func openMenu(_ sender: Any) {
+        
         if menuShowing {
             leadingConstrait.constant = -200
             
@@ -203,16 +218,12 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
                         }
                     }
                     
-                    print("\n \(self.objectID) \n")
+                    //print("\n \(self.objectID) \n")
                     // Use the ObjectID to update the users location to the new one
                     
                     let newQuery = PFQuery(className: "UserLocations")
                     newQuery.getObjectInBackground(withId: self.objectID, block: { (object, error) in
-                        print("6")
                         object?.deleteInBackground()
-                        
-                        let loginManager = FBSDKLoginManager()
-                        loginManager.logOut()
                         
                         PFUser.logOut()
                         print("logged out")
@@ -223,8 +234,6 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
                     })
                 }
                 else {
-                    let loginManager = FBSDKLoginManager()
-                    loginManager.logOut()
                     
                     PFUser.logOut()
                     print("logged out")
@@ -235,8 +244,8 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
             }
         }
         else {
-            let loginManager = FBSDKLoginManager()
-            loginManager.logOut()
+            /*let loginManager = FBSDKLoginManager()
+            loginManager.logOut()*/
             
             PFUser.logOut()
             print("logged out")
@@ -257,17 +266,27 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
                 let user = PFUser.current()
                 user?.password = "test"
                 user?["personnummer"] = 123456789012
-                user?["phone"] = 0987654321
+                user?["phone"] = "0987654321"
                 user?["FBandParse"] = true
                 user?.saveInBackground(block: { (success, error) in
                     if error != nil {
                         print(error!.localizedDescription as Any)
+                        PFFacebookUtils.unlinkUser(inBackground: PFUser.current()!, block: { (success, error) in
+                            if error != nil {
+                                print(error!.localizedDescription as Any)
+                            }
+                            else {
+                                print("success unlinking account")
+                            }
+                        })
                     }
                     else {
                         print("success")
                         self.connectWithFacebookButton.isHidden = true
                         self.customLoginButton.isHidden = true
                         self.inviteFriendsButton.isEnabled = true
+                        self.disconnectFromFacebookButton.isHidden = false
+                        self.dismissMenu()
                     }
                 })
             }
@@ -275,35 +294,73 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
     }
     
     
+    
     @IBAction func createACustomLogin(_ sender: Any) {
+        let alert = UIAlertController(title: "Notice", message: "Share Location", preferredStyle: UIAlertControllerStyle.alert)
         
+        alert.addTextField { (emailTextfield) in
+            emailTextfield.text = (PFUser.current()?.email)! as String
+            emailTextfield.isEnabled = false
+        }
         
-        PFFacebookUtils.linkUser(inBackground: PFUser.current()!, with: FBSDKAccessToken.current()) { (success, error) in
-            if error != nil {
-                print(error!.localizedDescription as Any)
-            }
-            else {
-                let user = PFUser.current()
+        alert.addTextField { (phoneTextfield) in
+            phoneTextfield.keyboardType = UIKeyboardType.numberPad
+            phoneTextfield.placeholder = "0701234567"
+        }
+        
+        alert.addTextField { (socialTextfield) in
+            socialTextfield.placeholder = "19901212"
+        }
+        
+        alert.addTextField { (passwordTexfield) in
+            passwordTexfield.isSecureTextEntry = true
+            passwordTexfield.placeholder = "Password"
+        }
+        
+        alert.addAction(UIAlertAction(title: "Save login", style: UIAlertActionStyle.default, handler: { (handler) in
+            
+            
+            if let emailTextfield = alert.textFields?[0].text, !emailTextfield.isEmpty, let phoneTextfield = alert.textFields?[1].text, !phoneTextfield.isEmpty, let socialTextfield = alert.textFields?[2].text, !socialTextfield.isEmpty, let passwordTextfield = alert.textFields?[3].text, !passwordTextfield.isEmpty  {
                 
-                user?.password = "test"
-                user?.username = "danne_tw@hotmail.com"
-                user?["personnummer"] = 123456789012
-                user?["phone"] = "0987654321"
-                user?["FBandParse"] = true
-                user?.saveInBackground(block: { (success, error) in
-                    print("hej")
+                PFFacebookUtils.linkUser(inBackground: PFUser.current()!, with: FBSDKAccessToken.current()) { (success, error) in
                     if error != nil {
                         print(error!.localizedDescription as Any)
                     }
                     else {
-                        print("success")
-                        self.connectWithFacebookButton.isHidden = true
-                        self.customLoginButton.isHidden = true
-                        self.inviteFriendsButton.isEnabled = true
+                        let user = PFUser.current()
+                        let personalNumber = Int(socialTextfield)
+                        user?.password = passwordTextfield
+                        user?.username = emailTextfield
+                        user?["personnummer"] = personalNumber
+                        user?["phone"] = phoneTextfield
+                        user?["FBandParse"] = true
+                        user?.saveInBackground(block: { (success, error) in
+                            if error != nil {
+                                print(error!.localizedDescription as Any)
+                            }
+                            else {
+                                print("success")
+                                self.connectWithFacebookButton.isHidden = true
+                                self.customLoginButton.isHidden = true
+                                self.inviteFriendsButton.isEnabled = true
+                                self.disconnectFromFacebookButton.isHidden = false
+                                self.dismissMenu()
+                            }
+                        })
                     }
-                })
+                }
+                
             }
-        }
+            else {
+                print("error")
+                return
+            }
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
         
     }
     

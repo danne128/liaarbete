@@ -124,6 +124,18 @@ class SignInViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFi
                                 }
                                 else {
                                     print(error!.localizedDescription as Any)
+                                    self.somethingWrongLabel.text = error!.localizedDescription
+                                    self.somethingWrongLabel.numberOfLines = 1
+                                    self.somethingWrongLabel.adjustsFontSizeToFitWidth = true
+                                    self.somethingWrongLabel.lineBreakMode = NSLineBreakMode.byClipping
+                                    PFUser.current()?.deleteInBackground(block: { (success, error) in
+                                        if error != nil {
+                                            print(error!.localizedDescription as Any)
+                                        }
+                                        else {
+                                            PFUser.logOut()
+                                        }
+                                    })
                                 }
                             })
                         }

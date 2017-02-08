@@ -77,11 +77,21 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
         segmentedControl.isHidden = true
         segmentedControl.addTarget(self, action: #selector(GoogleMapsViewController.segmentedControlValueChanged), for: UIControlEvents.valueChanged)
         
+        
+        
+        let menuView = UIView(frame: CGRect(x: 0, y: navBarHeight + 20, width: ((mapView.frame.size.width / 2) + (mapView.frame.size.width / 8)), height: mapView.frame.size.height))
+        menuView.backgroundColor = UIColor(red: 133/255, green: 184/255, blue: 225/255, alpha: 1.0)
+        menuView.layer.shadowOpacity = 1.0
+        menuView.layer.shadowRadius = 6
+        
+        
+        
         let button = UIButton()
         button.frame = (frame: CGRect(x: (mapView.frame.size.width / 2 - (width / 2)), y: mapView.frame.size.height - 120, width: width, height: height))
         button.setImage(#imageLiteral(resourceName: "facebook-button.png"), for: .normal)
         button.setTitle("My button", for: .normal)
         //mapView.addSubview(button)
+        //mapView.addSubview(menuView)
         mapView.addSubview(segmentedControl)
     }
 

@@ -34,13 +34,17 @@ class ViewController: UIViewController {
         
         titleLabel.textColor = UIColor.white
         
-        
-        if FBSDKAccessToken.current() != nil {
-            performSegue(withIdentifier: "UserAlreadyLoggedIn", sender: self)
-        }
-        
         if PFUser.current() != nil {
-            performSegue(withIdentifier: "UserAlreadyLoggedIn", sender: self)
+            PFSession.getCurrentSessionInBackground(block: { (session, error) in
+                if error != nil {
+                    PFUser.logOut()
+                    print(error!.localizedDescription as Any)
+                }
+                else if session != nil {
+                    self.performSegue(withIdentifier: "UserAlreadyLoggedIn", sender: self)
+                    print(session as Any)
+                }
+            })
         }
     }
 

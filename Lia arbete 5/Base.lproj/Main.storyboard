@@ -654,7 +654,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.564436449121832" green="0.75344927277789231" blue="0.89646883289124668" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.56377512216567993" green="0.7523922324180603" blue="0.89486849308013916" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="Fyl-Ga-VCP"/>
                                 </constraints>
@@ -775,6 +775,6 @@
         <image name="facebook-button.png" width="294" height="42"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="f28-rL-bNo"/>
+        <segue reference="Xcz-ZE-Ob3"/>
     </inferredMetricsTieBreakers>
 </document>
