@@ -103,12 +103,13 @@ class SignInViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFi
                     FBSDKGraphRequest(graphPath: "me", parameters: parameters).start { (connection, result, error) in
                         
                         if error != nil {
-                            print(error as Any)
+                            print(error!.localizedDescription as Any)
                             self.moveOn = false
                             return
                         }
                         
                         guard let resultNew = result as? [String:Any] else {
+                            print("error")
                             return
                         }
                         
@@ -133,7 +134,17 @@ class SignInViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFi
                                             print(error!.localizedDescription as Any)
                                         }
                                         else {
-                                            PFUser.logOut()
+                                            let facebookRequest: FBSDKGraphRequest! = FBSDKGraphRequest(graphPath: "/me/permissions", parameters: nil, httpMethod: "DELETE")
+                                            
+                                            facebookRequest.start(completionHandler: { (connection, result, error) in
+                                                if error != nil {
+                                                    print(error!.localizedDescription as Any)
+                                                }
+                                                else if error == nil && result != nil {
+                                                    print("facebook disconnected")
+                                                    PFUser.logOut()
+                                                }
+                                            })
                                         }
                                     })
                                 }

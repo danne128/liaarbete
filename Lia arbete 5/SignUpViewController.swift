@@ -162,8 +162,19 @@ class SignUpViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFi
                                             print(error!.localizedDescription as Any)
                                         }
                                         else {
-                                            PFUser.logOut()
+                                            let facebookRequest: FBSDKGraphRequest! = FBSDKGraphRequest(graphPath: "/me/permissions", parameters: nil, httpMethod: "DELETE")
+                                            
+                                            facebookRequest.start(completionHandler: { (connection, result, error) in
+                                                if error != nil {
+                                                    print(error!.localizedDescription as Any)
+                                                }
+                                                else if error == nil && result != nil {
+                                                    print("facebook disconnected")
+                                                    PFUser.logOut()
+                                                }
+                                            })
                                         }
+
                                     })
                                 }
                             })

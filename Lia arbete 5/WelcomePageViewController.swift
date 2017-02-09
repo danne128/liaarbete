@@ -140,31 +140,54 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
     }
     
     
-    
     func disconnectFromFacebook() {
-        PFFacebookUtils.unlinkUser(inBackground: PFUser.current()!) { (success, error) in
+        
+        let facebookRequest: FBSDKGraphRequest! = FBSDKGraphRequest(graphPath: "/me/permissions", parameters: nil, httpMethod: "DELETE")
+        facebookRequest.start { (connection, result, error) in
             if error != nil {
                 print(error!.localizedDescription as Any)
+                return
             }
-            else if success == true {
-                let user = PFUser.current()
-                user?["FBandParse"] = false
-                user?.saveInBackground(block: { (success, error) in
+            else if error == nil && result != nil {
+                print(result as! NSDictionary)
+                print("facebook disconnected")
+                
+                PFFacebookUtils.unlinkUser(inBackground: PFUser.current()!, block: { (success, error) in
                     if error != nil {
                         print(error!.localizedDescription as Any)
                     }
                     else {
-                        self.disconnectFromFacebookButton.isHidden = true
-                        self.connectWithFacebookButton.isHidden = false
-                        print("success")
+                        
+                        PFFacebookUtils.unlinkUser(inBackground: PFUser.current()!, block: { (success, error) in
+                            
+                            let user = PFUser.current()
+                            user?["FBandParse"] = false
+                            user?.saveInBackground(block: { (success, error) in
+                                
+                                if error != nil {
+                                    print(error!.localizedDescription as Any)
+                                }
+                                else {
+                                    self.disconnectFromFacebookButton.isHidden = true
+                                    self.connectWithFacebookButton.isHidden = false
+                                }
+                                
+                            })
+                            
+                        })
+                        
                     }
                 })
+                
             }
+            
         }
+        
+        
+        
     }
     
-    
-    
+
     
     @IBAction func openMenu(_ sender: Any) {
         
@@ -281,6 +304,7 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
                         })
                     }
                     else {
+                        PFUser.logInWithUsername(inBackground: PFUser.current()?["email"] as! String, password: "test")
                         print("success")
                         self.connectWithFacebookButton.isHidden = true
                         self.customLoginButton.isHidden = true
@@ -339,6 +363,7 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
                                 print(error!.localizedDescription as Any)
                             }
                             else {
+                                PFUser.logInWithUsername(inBackground: emailTextfield, password: passwordTextfield)
                                 print("success")
                                 self.connectWithFacebookButton.isHidden = true
                                 self.customLoginButton.isHidden = true
