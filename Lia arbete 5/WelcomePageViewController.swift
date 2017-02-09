@@ -333,6 +333,7 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
         }
         
         alert.addTextField { (socialTextfield) in
+            socialTextfield.keyboardType = UIKeyboardType.numberPad
             socialTextfield.placeholder = "19901212"
         }
         

@@ -9,6 +9,7 @@ target 'Lia arbete 5' do
 
     pod 'GoogleMaps'
     pod 'GooglePlaces'
+    pod 'GooglePlacePicker'
     pod 'Alamofire'
     pod 'SwiftyJSON'
 

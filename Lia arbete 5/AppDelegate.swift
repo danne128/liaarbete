@@ -11,6 +11,7 @@ import Bolts
 import Parse
 import GoogleMaps
 import ParseFacebookUtilsV4
+import GooglePlaces
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,7 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         PFFacebookUtils.initializeFacebook(applicationLaunchOptions: launchOptions)
+        
         GMSServices.provideAPIKey(Config.googleAPI)
+        GMSPlacesClient.provideAPIKey(Config.googlePlacesAPI)
         
         return true
     }

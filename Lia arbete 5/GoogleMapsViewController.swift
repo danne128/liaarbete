@@ -8,11 +8,11 @@
 
 import UIKit
 import GoogleMaps
+import GooglePlaces
+import GooglePlacePicker
 import CoreLocation
 import Parse
 import Foundation
-import Alamofire
-import SwiftyJSON
 
 
 class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
@@ -47,6 +47,9 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
     var newLocation = CLLocation()
     
     var mapView = GMSMapView()
+    
+    
+    var placesClient: GMSPlacesClient!
     
     
     var myLong: NSNumber = 0.0
@@ -437,7 +440,7 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
     @IBAction func shareLocationWasClicked(_ sender: AnyObject) {
         
         
-        // create the alert
+        /*// create the alert
         let alert = UIAlertController(title: "Notice", message: "Share Location", preferredStyle: UIAlertControllerStyle.alert)
         
         // add the actions (buttons)
@@ -462,7 +465,32 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         
         // show the alert
-        self.present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)*/
+        
+        
+        
+        let config = GMSPlacePickerConfig(viewport: nil)
+        let placePicker = GMSPlacePicker(config: config)
+        
+        placePicker.pickPlace { (place, error) in
+            if let error = error {
+                print("Pick Place error: \(error.localizedDescription as Any)")
+                return
+            }
+            
+            guard let place = place else {
+                print("No place selected")
+                return
+            }
+            
+            let placeAdress = place.formattedAddress!
+            let fixedStringUrl = placeAdress.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)
+            self.getAddressFromLongLat(address: fixedStringUrl!)
+            
+        }
+        
+        
+        
     }
     
     
