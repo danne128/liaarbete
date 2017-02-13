@@ -104,11 +104,11 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
     }
     
     
-    @IBAction func unwindSecondView(segue: UIStoryboardSegue) {
+    /*@IBAction func unwindSecondView(segue: UIStoryboardSegue) {
         checkIfUserHasASavedLocation()
         getOtherUsersLocation()
         runTimer()
-    }
+    }*/
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -437,63 +437,6 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
     }
     
     
-    @IBAction func shareLocationWasClicked(_ sender: AnyObject) {
-        
-        
-        /*// create the alert
-        let alert = UIAlertController(title: "Notice", message: "Share Location", preferredStyle: UIAlertControllerStyle.alert)
-        
-        // add the actions (buttons)
-        alert.addTextField { (adressTextfield) in
-            adressTextfield.placeholder = "Sverigevägen 123"
-        }
-        
-        alert.addAction(UIAlertAction(title: "Share Location", style: UIAlertActionStyle.default, handler: { (handler) in
-            let textField = alert.textFields![0]
-            if textField.text == "" {
-                alert.dismiss(animated: false, completion: { 
-                    print("test")
-                })
-            }
-            else {
-                let fixedStringUrl = textField.text!.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)
-                self.getAddressFromLongLat(address: fixedStringUrl!)
-            }
-        }))
-            
-        //alert.addAction(UIAlertAction(title: "Share Location", style: UIAlertActionStyle.default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-        
-        // show the alert
-        self.present(alert, animated: true, completion: nil)*/
-        
-        
-        
-        let config = GMSPlacePickerConfig(viewport: nil)
-        let placePicker = GMSPlacePicker(config: config)
-        
-        placePicker.pickPlace { (place, error) in
-            if let error = error {
-                print("Pick Place error: \(error.localizedDescription as Any)")
-                return
-            }
-            
-            guard let place = place else {
-                print("No place selected")
-                return
-            }
-            
-            let placeAdress = place.formattedAddress!
-            let fixedStringUrl = placeAdress.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)
-            self.getAddressFromLongLat(address: fixedStringUrl!)
-            
-        }
-        
-        
-        
-    }
-    
-    
     
     func checkIfUserHasASavedLocation() {
         
@@ -656,6 +599,14 @@ class GoogleMapsViewController: UIViewController, CLLocationManagerDelegate, GMS
         }
         
     }
+    
+    
+    
+    @IBAction func backButtonWasPressed(_ sender: Any) {
+        performSegue(withIdentifier: "unwindToWelcome", sender: self)
+    }
+    
+    
     
 }
 

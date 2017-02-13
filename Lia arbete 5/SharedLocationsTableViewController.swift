@@ -110,7 +110,7 @@ class SharedLocationsTableViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "BackToMaps" {
+        if segue.identifier == "EventToMap" {
             let destination = segue.destination as! GoogleMapsViewController
             
             if selected != nil {
@@ -147,12 +147,13 @@ class SharedLocationsTableViewController: UITableViewController {
     }
     
     
-    @IBAction func dismissViewButton(_ sender: Any) {
+    @IBAction func eventToMapWasPressed(_ sender: Any) {
+        
         if selected == nil {
-            print("funkade inte")
+            print("du klickade inte på något")
         }
         else {
-            performSegue(withIdentifier: "BackToMaps", sender: self)
+            performSegue(withIdentifier: "EventToMap", sender: self)
         }
         
     }

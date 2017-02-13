@@ -9,6 +9,9 @@
 import UIKit
 import Parse
 import ParseFacebookUtilsV4
+import GooglePlaces
+import GooglePlacePicker
+import CoreLocation
 
 class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate, UIGestureRecognizerDelegate {
     
@@ -64,7 +67,7 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
         disconnectFromFacebookButton.isHidden = true
         menuView.addSubview(disconnectFromFacebookButton)
         
-        
+        self.email = PFUser.current()?["email"] as! String
         
         fullNameLabel.text = name
         
@@ -98,10 +101,6 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
         self.view.addGestureRecognizer(tap)
         
         fetchUserProfile()
-        
-        
-        
-        
     }
     
     
@@ -182,10 +181,133 @@ class WelcomePageViewController: UIViewController, FBSDKAppInviteDialogDelegate,
             }
             
         }
+    }
+    
+    
+    
+    
+    
+    
+    func getAddressFromLongLat(address: String) {
+        let stringUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=\(address)&key=\(Config.googleDirectionsGeolocationAPI)"
+        let url = NSURL(string: stringUrl)
+        let request = NSMutableURLRequest(url: url! as URL)
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+            guard error == nil && data != nil else {
+                print("Error: ", error!.localizedDescription as Any)
+                return
+            }
+            
+            let httpStatus = response as? HTTPURLResponse
+            
+            if httpStatus!.statusCode == 200 {
+                
+                if data?.count != 0 {
+                    
+                    let responseString = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
+                    let test = responseString["status"]! as! String
+                    if test == "ZERO_RESULTS" {
+                        let alert = UIAlertController(title: "Error", message: "That address is invalid", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    else {
+                        let results = responseString["results"] as! NSArray
+                        let result = results[0] as! NSDictionary
+                        let geometry = result["geometry"] as! NSDictionary
+                        let location = geometry["location"] as! NSDictionary
+                        let lat = location["lat"] as! NSNumber
+                        let long = location["lng"] as! NSNumber
+                        
+                        let query = PFQuery(className: "SharedLocations")
+                        query.whereKey("SharedBy", equalTo: self.email)
+                        query.getFirstObjectInBackground(block: { (object, error) in
+                            
+                            if object == nil {
+                                let shareLocation = PFObject(className: "SharedLocations")
+                                shareLocation["SharedBy"] = self.email
+                                shareLocation["longitude"] = long
+                                shareLocation["latitude"] = lat
+                                shareLocation.saveInBackground(block: { (success, error) in
+                                    if error != nil {
+                                        print(error!.localizedDescription as Any!)
+                                    }
+                                    else {
+                                        print("saved location")
+                                    }
+                                })
+                            }
+                            else {
+                                object?["SharedBy"] = self.email
+                                object?["longitude"] = long
+                                object?["latitude"] = lat
+                                object?.saveInBackground(block: { (success, error) in
+                                    if error != nil {
+                                        print("hej")
+                                        print(error!.localizedDescription as Any!)
+                                    }
+                                    else {
+                                        print("saved location")
+                                    }
+                                })
+                            }
+                        })
+                    }
+                    
+                }
+                else {
+                    print(error!.localizedDescription as Any)
+                    let alert = UIAlertController(title: "Error", message: "That address is invalid", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+            else {
+                print("Error HttpStatusCode is: ", httpStatus!.statusCode)
+            }
+        }
+        task.resume()
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    @IBAction func createAnEventButton(_ sender: Any) {
         
+        
+        let config = GMSPlacePickerConfig(viewport: nil)
+        let placePicker = GMSPlacePicker(config: config)
+        
+        placePicker.pickPlace { (place, error) in
+            if let error = error {
+                print("Pick Place error: \(error.localizedDescription as Any)")
+                return
+            }
+            
+            guard let place = place else {
+                print("No place selected")
+                return
+            }
+            
+            let placeAdress = place.formattedAddress!
+            let fixedStringUrl = placeAdress.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)
+            self.getAddressFromLongLat(address: fixedStringUrl!)
+            
+        }
         
         
     }
+    
+    
+    
+    @IBAction func unwindToWelcome(segue: UIStoryboardSegue) {
+        
+    }
+    
     
 
     

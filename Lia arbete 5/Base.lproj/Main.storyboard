@@ -9,7 +9,6 @@
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,7 +17,7 @@
             <objects>
                 <navigationController id="bRq-wC-KhU" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aSu-2v-vbV">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="aSu-2v-vbV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -59,7 +58,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MITT LIA PROJEKT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1n3-MK-tfM">
-                                <rect key="frame" x="101.5" y="145" width="172" height="24"/>
+                                <rect key="frame" x="102" y="145" width="172" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -222,27 +221,21 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Google maps" id="QUh-w5-mWP" userLabel="Google Maps">
-                        <rightBarButtonItems>
-                            <barButtonItem title="Share" id="4c0-PG-IuX">
-                                <connections>
-                                    <action selector="shareLocationWasClicked:" destination="jUo-Yb-Ugm" id="Gfu-TJ-1sn"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Find" id="yui-ST-AxW">
-                                <connections>
-                                    <segue destination="3wf-kZ-t6E" kind="show" id="B8f-Xo-lsu"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="OPL-08-jqB">
+                            <connections>
+                                <action selector="backButtonWasPressed:" destination="jUo-Yb-Ugm" id="vEL-CS-brO"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="shareButton" destination="4c0-PG-IuX" id="0lf-Hg-vUg"/>
+                        <segue destination="qPi-U1-rNI" kind="unwind" identifier="unwindToWelcome" unwindAction="unwindToWelcomeWithSegue:" id="LuT-dw-S9n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zOX-zn-9Jh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="qPi-U1-rNI" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2574" y="1546"/>
+            <point key="canvasLocation" x="3524" y="1546"/>
         </scene>
         <!--Shared Locations-->
         <scene sceneID="yaC-hd-hze">
@@ -282,19 +275,18 @@
                         <barButtonItem key="backBarButtonItem" systemItem="redo" id="tZb-0Y-4Zm"/>
                         <barButtonItem key="rightBarButtonItem" title="Get directions" id="S2p-47-c01">
                             <connections>
-                                <action selector="dismissViewButton:" destination="3wf-kZ-t6E" id="t5Z-yf-uEG"/>
+                                <action selector="eventToMapWasPressed:" destination="3wf-kZ-t6E" id="8vy-kW-ZOy"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="segmentControl" destination="6jI-bF-BF0" id="QcR-TJ-Xen"/>
-                        <segue destination="oKk-NB-hyK" kind="unwind" identifier="BackToMaps" unwindAction="unwindSecondViewWithSegue:" id="oZb-8h-kIK"/>
+                        <segue destination="jUo-Yb-Ugm" kind="show" identifier="EventToMap" id="xpB-wl-0FT"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pel-Rf-azh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="oKk-NB-hyK" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3449" y="1546"/>
+            <point key="canvasLocation" x="2785" y="1546"/>
         </scene>
         <!--Sign up-->
         <scene sceneID="O0r-pL-701">
@@ -590,8 +582,15 @@
                                     <segue destination="vND-1v-Gbz" kind="show" id="5Gz-mi-4UI"/>
                                 </connections>
                             </button>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Qx-VO-Aoo">
-                                <rect key="frame" x="-200" y="64" width="200" height="603"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnp-S6-QLR">
+                                <rect key="frame" x="145" y="122" width="84" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Qx-VO-Aoo">
+                                <rect key="frame" x="0.0" y="64" width="200" height="603"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mbH-Mr-0CX">
                                         <rect key="frame" x="8" y="251" width="184" height="40"/>
@@ -634,14 +633,25 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8uA-O4-KVK">
-                                        <rect key="frame" x="64" y="172" width="72" height="40"/>
+                                        <rect key="frame" x="33" y="140" width="134" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="17"/>
-                                        <state key="normal" title="Maps">
+                                        <state key="normal" title="Create an event">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="jUo-Yb-Ugm" kind="show" id="dW7-Ob-5zE"/>
+                                            <action selector="createAnEventButton:" destination="Wxd-eL-PDP" eventType="touchUpInside" id="T1o-iw-qJA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTc-C7-0WC">
+                                        <rect key="frame" x="33" y="179" width="134" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="17"/>
+                                        <state key="normal" title="Join an event">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="3wf-kZ-t6E" kind="show" id="4Sq-hW-yUm"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -650,13 +660,6 @@
                                     <constraint firstAttribute="width" constant="200" id="Fyl-Ga-VCP"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnp-S6-QLR">
-                                <rect key="frame" x="145" y="122" width="84" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -690,7 +693,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dS0-Fu-reX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2573.5999999999999" y="757.87106446776613"/>
+            <point key="canvasLocation" x="2785" y="777"/>
         </scene>
         <!--Friends-->
         <scene sceneID="8em-Hw-lwi">
@@ -709,14 +712,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <switch opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HQg-Nl-BYP">
-                                            <rect key="frame" x="247" y="29" width="51" height="31"/>
+                                            <rect key="frame" x="302" y="29" width="51" height="31"/>
                                             <color key="onTintColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <action selector="handleChange:" destination="Z8B-mX-xz9" eventType="valueChanged" id="tb4-Cb-J41"/>
                                             </connections>
                                         </switch>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invite" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LY7-wZ-ajH">
-                                            <rect key="frame" x="251" y="8" width="41" height="21"/>
+                                            <rect key="frame" x="306" y="8" width="41" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -766,13 +769,13 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z5s-cw-Sgu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3334" y="758"/>
+            <point key="canvasLocation" x="3485" y="777"/>
         </scene>
     </scenes>
     <resources>
         <image name="facebook-button.png" width="294" height="42"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Zvz-MQ-9F0"/>
+        <segue reference="f28-rL-bNo"/>
     </inferredMetricsTieBreakers>
 </document>
